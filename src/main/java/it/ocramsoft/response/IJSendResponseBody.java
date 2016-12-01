@@ -16,5 +16,27 @@ public interface IJSendResponseBody<T> {
 	 * @param o the new data
 	 */
 	public void setData(T o);
+	
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
+	public T getData();
+	
+	/**
+	 * Gets the status.
+	 *
+	 * @return the status
+	 */
+	public RequestStatus getStatus();
+
+	/**
+	 * Sets the status.
+	 *
+	 * @param status the new status
+	 */
+	public void setStatus(RequestStatus status);
+	
 
 }

@@ -24,9 +24,6 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 	
 	protected final static String status_string_val = "status";
 	protected final static String T_string_val = "data";
-
-
-	IJSendResponseFactory<T> jSendResponseFactory;
 		
 	@Override
 	protected boolean supports(Class<?> clazz)
@@ -37,10 +34,8 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 		return false;
 	}
 	
-	public AbstractJSendMessageConverter(IJSendResponseFactory<T> responseFactory)
-	{
-		this.jSendResponseFactory = responseFactory;
-	
+	public AbstractJSendMessageConverter()
+	{	
 		setSupportedMediaTypes(Arrays.asList(new MediaType("application","json")));
 	}
 
@@ -58,13 +53,12 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 		} catch (JSONException e)
 		{
 			throw new IOException(e);
-			
 		}
 		
 		try
 		{
 			String n = obj.getString(status_string_val);
-			BasicJSendResponse<T> response = jSendResponseFactory.build(RequestStatus.getEnumFromString(n),readObject(obj) );
+			BasicJSendResponse<T> response = new BasicJSendResponse<T>(RequestStatus.getEnumFromString(n),readObject(obj) );
 			return response;
 			
 		} catch (JSONException e)
@@ -79,8 +73,6 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 			throws IOException, HttpMessageNotWritableException
 	{
 		throw new HttpMessageNotWritableException("Functionality not implemented");
-		// TODO Auto-generated method stub
-		
 	}
 	
 	private Charset getContentTypeCharset(MediaType contentType) {
