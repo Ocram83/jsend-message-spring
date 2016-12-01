@@ -1,0 +1,16 @@
+*.iml
+*.versionsBackup
+*.classpath
+*.settings
+*.log
+*.mwb.bak
+dependency-reduced-pom.xml
+.metadata
+.project
+.springBeans
+.idea/
+.svn/
+.metadata/
+target/
+RemoteSystemsTempFiles/
+Servers/
