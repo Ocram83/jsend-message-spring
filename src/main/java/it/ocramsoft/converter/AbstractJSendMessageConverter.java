@@ -1,4 +1,4 @@
-package it.ocramsoft;
+package it.ocramsoft.converter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -14,6 +14,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.util.StreamUtils;
 
+import it.ocramsoft.converter.exception.GenericJSendResponseException;
 import it.ocramsoft.pattern.IJSendResponseFactory;
 import it.ocramsoft.response.BasicJSendResponse;
 import it.ocramsoft.response.RequestStatus;
@@ -61,9 +62,9 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 			BasicJSendResponse<T> response = new BasicJSendResponse<T>(RequestStatus.getEnumFromString(n),readObject(obj) );
 			return response;
 			
-		} catch (JSONException e)
+		} catch (JSONException | GenericJSendResponseException e )
 		{
-			throw new  HttpMessageNotReadableException(e.getMessage());
+			throw new  HttpMessageNotReadableException(e.getMessage(),e.getCause());
 		}
 		
 	}
@@ -85,7 +86,7 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 	}
 
 	
-	protected abstract T readObject(JSONObject s) throws JSONException;
+	protected abstract T readObject(JSONObject s) throws JSONException,GenericJSendResponseException;
 
 
 }
