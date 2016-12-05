@@ -2,7 +2,9 @@ package it.ocramsoft.converter;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,12 +18,16 @@ import org.springframework.util.StreamUtils;
 
 import it.ocramsoft.converter.exception.GenericJSendResponseException;
 import it.ocramsoft.pattern.IJSendResponseFactory;
-import it.ocramsoft.response.BasicJSendResponse;
+import it.ocramsoft.response.BasicJSendMessage;
 import it.ocramsoft.response.RequestStatus;
 
-public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessageConverter<BasicJSendResponse<T>>{
+public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessageConverter<BasicJSendMessage<T>>{
 
 	public static final Charset DEFAULT_CHARSET = Charset.forName("ISO-8859-1");
+	
+	private final Charset defaultCharset;
+
+	private final List<Charset> availableCharsets;
 	
 	protected final static String status_string_val = "status";
 	protected final static String T_string_val = "data";
@@ -29,19 +35,36 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 	@Override
 	protected boolean supports(Class<?> clazz)
 	{
-		if(clazz.equals(BasicJSendResponse.class))
+		if(clazz.equals(BasicJSendMessage.class))
 			return true;
 		
 		return false;
 	}
 	
-	public AbstractJSendMessageConverter()
-	{	
+	/**
+	 * A default constructor that uses {@code "ISO-8859-1"} as the default charset.
+	 * @see #StringHttpMessageConverter(Charset)
+	 */
+	public AbstractJSendMessageConverter() {
+		this(DEFAULT_CHARSET);
 		setSupportedMediaTypes(Arrays.asList(new MediaType("application","json")));
+
 	}
 
+	/**
+	 * A constructor accepting a default charset to use if the requested content
+	 * type does not specify one.
+	 */
+	public AbstractJSendMessageConverter(Charset defaultCharset) {
+		
+		setSupportedMediaTypes(Arrays.asList(new MediaType("application","json")));
+		this.defaultCharset = defaultCharset;
+		this.availableCharsets = new ArrayList<Charset>(Charset.availableCharsets().values());
+	}
+
+
 	@Override
-	protected BasicJSendResponse<T> readInternal(Class<? extends BasicJSendResponse<T>> clazz, HttpInputMessage inputMessage)
+	protected BasicJSendMessage<T> readInternal(Class<? extends BasicJSendMessage<T>> clazz, HttpInputMessage inputMessage)
 			throws IOException, HttpMessageNotReadableException
 	{	
 		
@@ -59,7 +82,7 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 		try
 		{
 			String n = obj.getString(status_string_val);
-			BasicJSendResponse<T> response = new BasicJSendResponse<T>(RequestStatus.getEnumFromString(n),readObject(obj) );
+			BasicJSendMessage<T> response = new BasicJSendMessage<T>(RequestStatus.getEnumFromString(n),readObject(obj) );
 			return response;
 			
 		} catch (JSONException | GenericJSendResponseException e )
@@ -70,10 +93,20 @@ public abstract class AbstractJSendMessageConverter<T> extends AbstractHttpMessa
 	}
 
 	@Override
-	protected void writeInternal(BasicJSendResponse<T> t, HttpOutputMessage outputMessage)
+	protected void writeInternal(BasicJSendMessage<T> t, HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException
 	{
-		throw new HttpMessageNotWritableException("Functionality not implemented");
+		outputMessage.getHeaders().setAcceptCharset(getAcceptedCharsets());
+		
+		JSONObject jsonObject = new JSONObject(t);
+		
+		Charset charset = getContentTypeCharset(outputMessage.getHeaders().getContentType());
+		StreamUtils.copy(jsonObject.toString(), charset, outputMessage.getBody());
+//		throw new HttpMessageNotWritableException("Functionality not implemented");
+	}
+	
+	protected List<Charset> getAcceptedCharsets() {
+		return this.availableCharsets;
 	}
 	
 	private Charset getContentTypeCharset(MediaType contentType) {

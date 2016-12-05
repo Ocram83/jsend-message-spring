@@ -11,7 +11,7 @@ import it.ocramsoft.response.RequestStatus;
  *
  * @param <T> the generic type
  */
-public class BasicJSendResponse<T> implements IJSendResponseBody<T> {
+public class BasicJSendMessage<T> implements IJSendMessageBody<T> {
 	
 	/** The status. */
 	RequestStatus status;
@@ -25,11 +25,13 @@ public class BasicJSendResponse<T> implements IJSendResponseBody<T> {
 	 * @param o the o
 	 * @param response the response
 	 */
-	public BasicJSendResponse(RequestStatus response,T o)
+	public BasicJSendMessage(RequestStatus response,T o)
 	{
 		this.status = response;
 		setData(o);
 	}
+	
+	public BasicJSendMessage(){}
 
 	/**
 	 * Gets the status.

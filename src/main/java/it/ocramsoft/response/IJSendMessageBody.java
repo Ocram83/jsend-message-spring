@@ -8,7 +8,7 @@ package it.ocramsoft.response;
  *
  * @param <T> the generic type
  */
-public interface IJSendResponseBody<T> {
+public interface IJSendMessageBody<T> {
 	
 	/**
 	 * Sets the data that represent the Response.

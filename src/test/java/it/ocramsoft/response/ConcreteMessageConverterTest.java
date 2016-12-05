@@ -21,9 +21,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:\"HelloWorld\" }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<String> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<String> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), "HelloWorld");
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -40,9 +40,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:12 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<String> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<String> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), "HelloWorld");
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -59,9 +59,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:true }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Boolean> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Boolean> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Boolean(true));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -78,9 +78,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Boolean> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Boolean> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Boolean(true));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -97,9 +97,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Integer> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Integer> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Integer(1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -116,9 +116,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:-1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Integer> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Integer> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Integer(-1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -135,9 +135,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:true}".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Integer> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Integer> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(),new Integer(1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -154,9 +154,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Long> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Long> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Long(1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -173,9 +173,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:-1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Long> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Long> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Long(-1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -192,9 +192,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:\"Hello world!!\" }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Long> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Long> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Long(1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -211,9 +211,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:1234.1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Double> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Double> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Double(1234.1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -230,9 +230,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:-1234.1234 }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Double> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Double> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Double(-1234.1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
@@ -249,9 +249,9 @@ public class ConcreteMessageConverterTest {
 		
 		HttpInputMessage him = new MockHttpInputMessage("{status:\"success\", data:\"Hello world!!\" }".getBytes());
 
-		Class clazz = BasicJSendResponse.class;
+		Class clazz = BasicJSendMessage.class;
 		
-		BasicJSendResponse<Double> bjsr= bmc.read(clazz, him);
+		BasicJSendMessage<Double> bjsr= bmc.read(clazz, him);
 		
 		Assert.assertEquals(bjsr.getData(), new Double(1234.1234));
 		Assert.assertEquals(bjsr.getStatus(), RequestStatus.SUCCESS);
